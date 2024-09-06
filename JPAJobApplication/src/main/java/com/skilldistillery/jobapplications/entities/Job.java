@@ -3,6 +3,9 @@ package com.skilldistillery.jobapplications.entities;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,8 +25,13 @@ public class Job {
 	
 	private String company;
 	
+	@CreationTimestamp
 	@Column(name = "date_applied")
 	private LocalDateTime dateApplied;
+	
+//	@UpdateTimestamp
+//	@Column(name = "update_date")
+//	private LocalDateTime updateDate;
 	
 	private String description;
 	
