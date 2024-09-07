@@ -11,6 +11,11 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Override
+	public User login(String username, String password) {
+		return userRepo.findByUsernameAndPassword(username, password);
+	}
 
 	@Override
 	public User findByUsername(String username) {
@@ -58,5 +63,7 @@ public class UserServiceImpl implements UserService{
 		}
 		return deleted;
 	}
+
+
 
 }

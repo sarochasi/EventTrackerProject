@@ -15,6 +15,7 @@ import com.skilldistillery.jobapplications.services.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("api")
@@ -22,6 +23,29 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@PostMapping("login")
+	public User login(@RequestBody User user, HttpServletRequest req, HttpServletResponse res) {
+		User loggedInUser = userService.login(user.getUsername(), user.getPassword());
+		if(loggedInUser != null) {
+			HttpSession session = req.getSession();
+			session.setAttribute("loggedInUser", loggedInUser);
+			res.setStatus(200);
+			return loggedInUser;
+		}else {
+			res.setStatus(401);
+			return null;
+		}
+	}
+	
+	@PostMapping("logout")
+    public void logout(HttpServletRequest req, HttpServletResponse res) {
+        HttpSession session = req.getSession(false); 
+        if (session != null) {
+            session.invalidate(); 
+        }
+        res.setStatus(200);
+    }
 	
 	@GetMapping("users/{username}")
 	public User getUserByUsername(@PathVariable("username") String username, HttpServletResponse res) {
