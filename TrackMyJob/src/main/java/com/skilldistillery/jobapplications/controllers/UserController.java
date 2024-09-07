@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.skilldistillery.jobapplications.entities.Job;
 import com.skilldistillery.jobapplications.entities.User;
 import com.skilldistillery.jobapplications.services.UserService;
 
