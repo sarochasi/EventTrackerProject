@@ -20,6 +20,7 @@ TrackMyJob is a web application designed to help users track thier job applicati
 | `job`    |`PUT /api/jobs/{jobId}` | Update a job by ID|
 | `void`    |`DELETE /api/jobs/{jobId}`| Disable a job by ID|
 | `List<job>`    |`GET statuses/{statusId}/jobs`| Get all jobs of a specific status|
+| `List<job>`    |`GET onsiteremotes/{id}/jobs`| Get all jobs of a specific onsite/remote|
 
 ## Technologies Used
 
