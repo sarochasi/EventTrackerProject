@@ -17,5 +17,7 @@ public interface JobService {
 	boolean delete(int jobId);
 	
 	List<Job> getJobsByStatus(int id);
+	
+	List<Job> getJobsByOnsiteRemote(int id);
 
 }

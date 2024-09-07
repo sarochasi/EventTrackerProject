@@ -92,5 +92,14 @@ public class JobController {
 		}
 		return jobs;
 	}
+	
+	@GetMapping("onsiteremotes/{id}/jobs")
+	public List<Job> getJobByOnsiteRemote(@PathVariable("id") Integer id, HttpServletResponse res){
+		List<Job> jobs = jobService.getJobsByOnsiteRemote(id);
+		if(jobs == null) {
+			res.setStatus(404);
+		}
+		return jobs;
+	}
 
 }

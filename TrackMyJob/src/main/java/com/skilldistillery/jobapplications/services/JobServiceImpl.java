@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.skilldistillery.jobapplications.entities.Job;
 import com.skilldistillery.jobapplications.repositories.JobRepository;
+import com.skilldistillery.jobapplications.repositories.OnsiteRemoteRepository;
 import com.skilldistillery.jobapplications.repositories.StatusRepository;
 
 @Service
@@ -18,6 +19,9 @@ public class JobServiceImpl implements JobService {
 	
 	@Autowired
 	private StatusRepository statusRepo;
+	
+	@Autowired
+	private OnsiteRemoteRepository onsiteRemoteRepo;
 
 	@Override
 	public List<Job> getAllJobs() {
@@ -84,6 +88,14 @@ public class JobServiceImpl implements JobService {
 			return null;
 			
 		}return jobRepo.findByStatusId(id);
+	}
+
+	@Override
+	public List<Job> getJobsByOnsiteRemote(int id) {
+		if(!onsiteRemoteRepo.existsById(id)) {
+			return null;
+		}
+		return jobRepo.findByOnsiteRemoteId(id);
 	}
 
 }
