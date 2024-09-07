@@ -1,5 +1,7 @@
 package com.skilldistillery.jobapplications.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.skilldistillery.jobapplications.entities.Job;
 import com.skilldistillery.jobapplications.entities.User;
 import com.skilldistillery.jobapplications.services.UserService;
 
@@ -47,6 +50,11 @@ public class UserController {
         res.setStatus(200);
     }
 	
+	@GetMapping("users")
+	public List<User> getUserList(){
+		return userService.getAllUsers();
+	}
+	
 	@GetMapping("users/{username}")
 	public User getUserByUsername(@PathVariable("username") String username, HttpServletResponse res) {
 		
@@ -72,7 +80,7 @@ public class UserController {
     }
 
     @PutMapping("users/{userId}")
-    public User updateUser(@PathVariable int userId, @RequestBody User user, HttpServletResponse res) {
+    public User updateUser(@PathVariable("userId") int userId, @RequestBody User user, HttpServletResponse res) {
         try {
             user = userService.updateUser(userId, user);
             if (user == null) {
@@ -86,7 +94,7 @@ public class UserController {
     }
 
     @DeleteMapping("users/{userId}")
-    public void deleteUser(@PathVariable int userId, HttpServletResponse res) {
+    public void deleteUser(@PathVariable("userId") int userId, HttpServletResponse res) {
         if (userService.deleteUser(userId)) {
             res.setStatus(204);
         } else {

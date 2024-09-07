@@ -1,5 +1,7 @@
 package com.skilldistillery.jobapplications.services;
 
+import java.util.List;
+
 import com.skilldistillery.jobapplications.entities.User;
 
 public interface UserService {
@@ -8,5 +10,6 @@ public interface UserService {
     User createUser(User user);
     User updateUser(int userId, User user);
     boolean deleteUser(int userId);
+	List<User> getAllUsers();
 
 }
