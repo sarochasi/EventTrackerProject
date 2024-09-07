@@ -15,5 +15,7 @@ public interface JobService {
 	Job update(int jobId, Job updatingJob);
 	
 	boolean delete(int jobId);
+	
+	List<Job> getJobsByStatus(int id);
 
 }

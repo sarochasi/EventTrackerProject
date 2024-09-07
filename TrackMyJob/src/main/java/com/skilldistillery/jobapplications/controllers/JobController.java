@@ -83,5 +83,14 @@ public class JobController {
 		}catch (Exception e) {
 		}
 	}
+	
+	@GetMapping("statuses/{statusId}/jobs")
+	public List<Job> getJobByStatus(@PathVariable("statusId") Integer id, HttpServletResponse res){
+		List<Job> jobs = jobService.getJobsByStatus(id);
+		if(jobs == null) {
+			res.setStatus(404);
+		}
+		return jobs;
+	}
 
 }

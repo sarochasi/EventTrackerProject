@@ -10,4 +10,6 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
 
 	List<Job> findByEnabledTrue();
 	
+	List<Job> findByStatusId(int statusId);
+	
 }

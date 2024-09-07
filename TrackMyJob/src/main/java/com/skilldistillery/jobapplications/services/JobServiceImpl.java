@@ -8,12 +8,16 @@ import org.springframework.stereotype.Service;
 
 import com.skilldistillery.jobapplications.entities.Job;
 import com.skilldistillery.jobapplications.repositories.JobRepository;
+import com.skilldistillery.jobapplications.repositories.StatusRepository;
 
 @Service
 public class JobServiceImpl implements JobService {
 
 	@Autowired
 	private JobRepository jobRepo;
+	
+	@Autowired
+	private StatusRepository statusRepo;
 
 	@Override
 	public List<Job> getAllJobs() {
@@ -72,6 +76,14 @@ public class JobServiceImpl implements JobService {
 			deleted = true;
 		}
 		return deleted;
+	}
+
+	@Override
+	public List<Job> getJobsByStatus(int id) {
+		if(!statusRepo.existsById(id)) {
+			return null;
+			
+		}return jobRepo.findByStatusId(id);
 	}
 
 }
