@@ -5,6 +5,9 @@
 	<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
 	<class>com.skilldistillery.jobapplications.entities.Job</class>
+	<class>com.skilldistillery.jobapplications.entities.User</class>
+	<class>com.skilldistillery.jobapplications.entities.Status</class>
+	<class>com.skilldistillery.jobapplications.entities.OnsiteRemote</class>
 	
     <properties>
       <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/jobapplicationsdb" />

@@ -12,11 +12,11 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-class JobTest {
+class OnsiteRemoteTest {
 	
 	private static EntityManagerFactory emf;
 	private EntityManager em;
-	private Job job;
+	private OnsiteRemote job;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -31,7 +31,7 @@ class JobTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		job = em.find(Job.class, 1);
+		job = em.find(OnsiteRemote.class, 1);
 	}
 
 	@AfterEach
@@ -41,27 +41,15 @@ class JobTest {
 	}
 
 	@Test
-	void test_Job_Entity_Mapping() {
+	void test_OnsiteRemote_entity_Mapping() {
 		assertNotNull(job);
-		assertEquals("Java developer", job.getPosition());
+		assertEquals("Onsite", job.getName());
 	}
 	
 	@Test
-	void test_Job_User_OneToMany_Mapping() {
-		assertNotNull(job.getUser());
-		assertEquals("admin", job.getUser().getUsername());
-	}
-	
-	@Test
-	void test_Job_Status_OneToMany_Mapping() {
-		assertNotNull(job.getStatus());
-		assertEquals("Not applied yet", job.getStatus().getStatus());
-	}
-	
-	@Test
-	void test_Job_OnsiteRemote_OneToMany_Mapping() {
-		assertNotNull(job.getOnsiteRemote());
-		assertEquals("Onsite", job.getOnsiteRemote().getName());
+	void test_OnsiteRemote_Job_OneToMany_Mapping() {
+		assertNotNull(job.getJobs());
+		assertTrue(job.getJobs().size() > 0);;
 	}
 
 }

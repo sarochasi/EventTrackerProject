@@ -17,7 +17,8 @@ public class JobServiceImpl implements JobService {
 	@Override
 	public List<Job> getAllJobs() {
 		
-		return jobRepo.findAll();
+//		return jobRepo.findAll();
+		return jobRepo.findByEnabledTrue();
 	}
 
 	@Override
@@ -28,7 +29,7 @@ public class JobServiceImpl implements JobService {
 
 	@Override
 	public Job create(Job newJob) {
-		// TODO Auto-generated method stub
+		newJob.setEnabled(true);
 		return null;
 	}
 
