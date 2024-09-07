@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `first_name` VARCHAR(45) NOT NULL,
   `last_name` VARCHAR(45) NOT NULL,
   `email` VARCHAR(100) NULL,
+  `enabled` TINYINT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -111,7 +112,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `jobapplicationsdb`;
-INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`) VALUES (1, 'admin', 'admin', 'admin', 'admin', NULL);
+INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `enabled`) VALUES (1, 'admin', 'admin', 'admin', 'admin', NULL, 1);
 
 COMMIT;
 

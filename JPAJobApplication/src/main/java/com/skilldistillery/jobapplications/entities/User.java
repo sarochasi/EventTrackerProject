@@ -32,6 +32,8 @@ public class User {
 	
 	private String email;
 	
+	private Boolean enabled;
+	
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private List<Job> jobs;
@@ -96,6 +98,14 @@ public class User {
 		this.jobs = jobs;
 	}
 
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -116,7 +126,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", email=" + email + "]";
+				+ ", lastName=" + lastName + ", email=" + email + ", enabled=" + enabled + "]";
 	}
 	
 	
