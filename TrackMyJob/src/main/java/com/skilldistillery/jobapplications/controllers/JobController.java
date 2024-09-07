@@ -3,6 +3,7 @@ package com.skilldistillery.jobapplications.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -69,6 +70,18 @@ public class JobController {
 			job =null;
 		}
 		return job;
+	}
+	
+	@DeleteMapping("jobs/{jobId}")
+	public void delete(@PathVariable("jobId") int id, HttpServletResponse res) {
+		try {
+			if(jobService.delete(id)) {
+				res.setStatus(204);
+			}else {
+				res.setStatus(404);
+			}
+		}catch (Exception e) {
+		}
 	}
 
 }
