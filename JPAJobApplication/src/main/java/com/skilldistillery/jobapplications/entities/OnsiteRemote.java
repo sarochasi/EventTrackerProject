@@ -3,6 +3,8 @@ package com.skilldistillery.jobapplications.entities;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,6 +24,7 @@ public class OnsiteRemote {
 	
 	private String note;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "onsiteRemote")
 	private List<Job> jobs;
 
