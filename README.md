@@ -1,6 +1,5 @@
-# EventTrackerProject
+# EventTrackerProject (TrackMyJob)
 
-# TrackMyJob
 ## Overview
 
 TrackMyJob is a web application designed to help users track thier job applications effiecielntly. The application allows users to create, update, delete, and view thier job applications, as well as manage different statuses and onsite/remote options. Built using Spring Boot and Spring Data JPA, TrackMyJob levereages RESTful services to provide a seamless user experience.
