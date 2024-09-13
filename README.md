@@ -4,6 +4,8 @@
 
 TrackMyJob is a web application designed to help users track thier job applications effiecielntly. The application allows users to create, update, delete, and view thier job applications, as well as manage different statuses and onsite/remote options. Built using Spring Boot and Spring Data JPA, TrackMyJob levereages RESTful services to provide a seamless user experience.
 
+## Database Schema
+
 ## REST Endpoints
 
 | Return Type     | Route                 | Functionality            |
@@ -20,6 +22,8 @@ TrackMyJob is a web application designed to help users track thier job applicati
 | `void`    |`DELETE /api/jobs/{jobId}`| Disable a job by ID|
 | `List<job>`    |`GET statuses/{statusId}/jobs`| Get all jobs of a specific status|
 | `List<job>`    |`GET onsiteremotes/{id}/jobs`| Get all jobs of a specific onsite/remote|
+
+## HTML/JavaScript Front End using XHR/AJAX
 
 ## Technologies Used
 

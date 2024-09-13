@@ -14,16 +14,113 @@
 </head>
 <body>
 
-<main class="container">
+	<div id="navbar"></div>
 
-	<h1>Welcome to the log</h1>
-	
-	
-	
-	
-	
-	
-</main>
+	<script>
+        // Use fetch to load the navbar.html
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar').innerHTML = data;
+            });
+        
+        function loadPage(page) {
+            fetch(page)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('content').innerHTML = data;
+                });
+        }
+
+        // Load the navbar on page load
+        window.onload = function() {
+            loadNavbar();
+            loadPage('home.html');  // Load default page
+        };
+    </script>
+
+
+	<main class="container">
+
+		<h1>Welcome to the log</h1>
+
+
+		<div id="jobListDiv">
+			<table>
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Name</th>
+					</tr>
+				</thead>
+				<tbody id="jobListBody">
+					<tr>
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+
+		<div id="JobDetailsDiv"></div>
+
+		<div id="addNewJobListDiv"></div>
+
+		<h1>Jobs List</h1>
+
+		<div id="addNewJobListDiv"></div>
+
+		<div id="jobListDiv">
+			
+		
+		</div>
+
+
+		<!-- <div id="jobListDiv" class="card-container">
+			<div class="row">
+
+				<div class="col-md-4 mb-4">
+					<div id="jobDiv" class="card" style="width: 18rem;">
+						<div class="card-body" id="jobDetail">
+							<h5 class="card-title" id="jobPosition">Position</h5>
+							<p class="card-text" id="jobCompany">
+								<strong>Company </strong>
+							</p>
+
+							 BUTTONS
+
+							<div class="d-flex justify-content-center align-items-center">
+								<a class="btn btn-outline-info" data-bs-toggle="collapse"
+									href="#collapse${job.id}" role="button" aria-expanded="false"
+									aria-controls="collapse${job.id}"> View</a>
+
+								<form action="updateWorkoutForm.do" method="GET">
+									<input type="hidden" name="jobId" value="${job.id}" />
+									<button type="submit" class="btn btn-outline-info">Edit</button>
+								</form>
+
+								<form action="deleteWorkout.do" method="POST">
+									<input type="hidden" name="jobId" value="${job.id}" />
+									<button type="submit" class="btn btn-outline-info">Delete</button>
+								</form>
+
+
+								<div class="collapse mt-2" id="collapse${job.id}">
+									<div class="card card-body">
+										<ul id="jobDetail">
+											<li></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+ -->
+
+
+	</main>
 
 
 
