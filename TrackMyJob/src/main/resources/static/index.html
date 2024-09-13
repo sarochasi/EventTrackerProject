@@ -66,8 +66,45 @@
 		<div id="addNewJobListDiv"></div>
 
 		<h1>Jobs List</h1>
+		
+		
 
-		<div id="addNewJobListDiv"></div>
+		<div id="addNewJobListDiv">
+		<form name="newJobForm" id="newJobForm">
+		<input type="text" name="position" placeholder="position">
+		 <input type="text" name="company" placeholder="company">
+		 <input type="date" name="dateApplied" placeholder="dateApplied">
+		 <input type="date" name="updateDate" placeholder="updateDate">
+		 <input type="text" name="description" placeholder="description">
+		 <input type="text" name="note" placeholder="note">
+		 
+				
+		<label for="status">Status</label>
+		<select name="status">
+			<option value="Not applied yet">Not applied yet</option>
+			<option value="Applied">Applied</option>
+			<option value="Interviewed">Interviewed</option>
+			<option value="Offered">Offered</option>
+			<option value="Rejected">Rejected</option>
+		
+		</select>
+		
+		<label for="onsiteRemote">Onsite or Remote</label>
+		<select name="onsiteRemote">
+			<option value="Onsite">Onsite</option>
+			<option value="Remote">Remote</option>
+			<option value="Hybrid">Hybrid</option>
+		
+		</select>
+		
+		
+		<button class="btn btn-info" type="submit" name="submitJob">Add new Job</button>
+
+	</form>
+		</div>
+
+
+
 
 		<div id="jobListDiv">
 			
