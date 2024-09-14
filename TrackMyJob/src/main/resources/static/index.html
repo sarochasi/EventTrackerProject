@@ -14,60 +14,13 @@
 </head>
 <body>
 
-	<div id="navbar"></div>
-
-	<script>
-        // Use fetch to load the navbar.html
-        fetch('navbar.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('navbar').innerHTML = data;
-            });
-        
-        function loadPage(page) {
-            fetch(page)
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('content').innerHTML = data;
-                });
-        }
-
-        // Load the navbar on page load
-        window.onload = function() {
-            loadNavbar();
-            loadPage('home.html');  // Load default page
-        };
-    </script>
-
 
 	<main class="container">
+	<div id="container">
 
 		<h1>Welcome to the log</h1>
 
-
-		<div id="jobListDiv">
-			<table>
-				<thead>
-					<tr>
-						<th>Id</th>
-						<th>Name</th>
-					</tr>
-				</thead>
-				<tbody id="jobListBody">
-					<tr>
-					</tr>
-				</tbody>
-			</table>
-
-		</div>
-
-		<div id="JobDetailsDiv"></div>
-
-		<div id="addNewJobListDiv"></div>
-
-		<h1>Jobs List</h1>
-		
-		
+	
 
 		<div id="addNewJobListDiv">
 		<form name="newJobForm" id="newJobForm">
@@ -104,16 +57,11 @@
 		</div>
 
 
+		<h1>Jobs List</h1>
 
 
-		<div id="jobListDiv">
-			
-		
-		</div>
-
-
-		<!-- <div id="jobListDiv" class="card-container">
-			<div class="row">
+		<div id="jobListDiv" class="card-container">
+			<div class="row" id=jobRow>
 
 				<div class="col-md-4 mb-4">
 					<div id="jobDiv" class="card" style="width: 18rem;">
@@ -154,8 +102,8 @@
 				</div>
 			</div>
 		</div>
- -->
-
+ 
+</div>
 
 	</main>
 

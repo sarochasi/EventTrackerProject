@@ -1,5 +1,6 @@
 package com.skilldistillery.jobapplications.entities;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -31,11 +32,11 @@ public class Job {
 	
 	@CreationTimestamp
 	@Column(name = "date_applied")
-	private LocalDateTime dateApplied;
+	private LocalDate dateApplied;
 	
 	@UpdateTimestamp
 	@Column(name = "date_updated")
-	private LocalDateTime updateDate;
+	private LocalDate updateDate;
 	
 	private String description;
 	
@@ -83,11 +84,11 @@ public class Job {
 		this.company = company;
 	}
 
-	public LocalDateTime getDateApplied() {
+	public LocalDate getDateApplied() {
 		return dateApplied;
 	}
 
-	public void setDateApplied(LocalDateTime dateApplied) {
+	public void setDateApplied(LocalDate dateApplied) {
 		this.dateApplied = dateApplied;
 	}
 
@@ -107,11 +108,11 @@ public class Job {
 		this.enabled = enabled;
 	}
 
-	public LocalDateTime getUpdateDate() {
+	public LocalDate getUpdateDate() {
 		return updateDate;
 	}
 
-	public void setUpdateDate(LocalDateTime updateDate) {
+	public void setUpdateDate(LocalDate updateDate) {
 		this.updateDate = updateDate;
 	}
 

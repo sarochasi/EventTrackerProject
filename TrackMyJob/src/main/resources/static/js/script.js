@@ -9,8 +9,9 @@ function init() {
 	loadAllJobs();
 
 	//TODO -event listeners, etc.
-	
-	document.newJobForm.submitJob.addEventListener('click', function(e) {
+	let newJobForm = document.forms['newJobForm'];
+	if(newJobForm){
+		newJobForm.submitJob.addEventListener('click', function(e) {
 
 			e.preventDefault();
 			let newJob = e.target.parentElement;
@@ -45,9 +46,27 @@ function init() {
 			console.log(jobObject);
 
 			let jobObjectJson = JSON.stringify(jobObject);
-			createNewFilm(jobObjectJson);
+			createNewJob(jobObjectJson);
 		});
+		}else{
+			console.error('newJobForm not found in the DOM.');
+		}
+	
+	
+		
+	let jobListLink = document.getElementById("goToList");
+	jobListLink.addEventListener('click',function(){
+		showJobsList();
+	});	
+		
+	let addLink = document.getElementById("goToAdd");
+	addLink.addEventListener('click',function(){
+		showCreateJob();
+	});	
+		
 }
+
+
 
 function loadAllJobs() {
 	let xhr = new XMLHttpRequest();
@@ -77,7 +96,7 @@ function displayError(errorMessage) {
 	jobListDiv.appendChild(errorElement);
 }
 
-function displayJobList(jobs) {
+function displayJobList1(jobs) {
 	let table = document.createElement('table');
 	let thead = document.createElement('thead');
 	let tr = document.createElement('tr');
@@ -119,35 +138,103 @@ function displayJobList(jobs) {
 	document.body.appendChild(table);
 }
 
-function displayJobList2(jobs) {
-	let jobsDiv = document.getElementById('jobListDiv');
-	jobsDiv.textContent = '';
 
+function displayJobList(jobs) {
+    let jobsDiv = document.getElementById('jobRow');
+    jobsDiv.textContent = ''; 
 
-	let jobDiv = document.getElementById('jobDiv');
-	jobs.forEach(function(job) {
-		let jobDetailDiv = document.getElementById('jobDetail');
-		let position = document.getElementById('jobPosition');
-		position.textContent = job.position;
+    jobs.forEach(function(job) {
+		
+        let colDiv = document.createElement('div');
+        colDiv.className = 'col-md-4 mb-4';
 
-		let company = document.getElementById('jobCompany');
-		company.textContent = job.company;
+        let cardDiv = document.createElement('div');
+        cardDiv.className = 'card';
+        cardDiv.style.width = '18rem';
 
-		//let unOrderedList = document.getElementById('jobDetail');
+        let cardBodyDiv = document.createElement('div');
+        cardBodyDiv.className = 'card-body';
 
-		jobDetailDiv.appendChild(position);
-		jobDetailDiv.appendChild(company);
+        // Job position title
+        let positionTitle = document.createElement('h5');
+        positionTitle.className = 'card-title';
+        positionTitle.textContent = job.position;
 
-		jobDiv.appendChild(jobDetailDiv);
-	});
-	jobsDiv.appendChild(jobDiv);
+        // Job company text
+        let companyText = document.createElement('p');
+        companyText.className = 'card-text';
+        companyText.innerHTML = `<strong>Company:</strong> ${job.company}`;
 
+        // Create button group (view, edit, delete)
+        let buttonGroupDiv = document.createElement('div');
+        buttonGroupDiv.className = 'd-flex justify-content-center align-items-center';
 
+        // View button with collapse functionality
+        let viewButton = document.createElement('a');
+        viewButton.className = 'btn btn-outline-info';
+        viewButton.setAttribute('data-bs-toggle', 'collapse');
+        viewButton.href = `#collapse${job.id}`;
+        viewButton.setAttribute('role', 'button');
+        viewButton.setAttribute('aria-expanded', 'false');
+        viewButton.setAttribute('aria-controls', `collapse${job.id}`);
+        viewButton.textContent = 'View';
 
-	document.body.appendChild(jobsDiv);
+        // Edit button form
+        let editForm = document.createElement('form');
+        editForm.action = 'updateWorkoutForm.do';
+        editForm.method = 'GET';
+        editForm.innerHTML = `<input type="hidden" name="jobId" value="${job.id}" />`;
+        let editButton = document.createElement('button');
+        editButton.type = 'submit';
+        editButton.className = 'btn btn-outline-info';
+        editButton.textContent = 'Edit';
+        editForm.appendChild(editButton);
 
+        // Delete button form
+        let deleteForm = document.createElement('form');
+        deleteForm.action = 'deleteWorkout.do';
+        deleteForm.method = 'POST';
+        deleteForm.innerHTML = `<input type="hidden" name="jobId" value="${job.id}" />`;
+        let deleteButton = document.createElement('button');
+        deleteButton.type = 'submit';
+        deleteButton.className = 'btn btn-outline-info';
+        deleteButton.textContent = 'Delete';
+        deleteForm.appendChild(deleteButton);
 
+        // Add buttons to the button group
+        buttonGroupDiv.appendChild(viewButton);
+        buttonGroupDiv.appendChild(editForm);
+        buttonGroupDiv.appendChild(deleteForm);
+
+        // Collapse section for job details
+        let collapseDiv = document.createElement('div');
+        collapseDiv.className = 'collapse mt-2';
+        collapseDiv.id = `collapse${job.id}`;
+        let collapseCard = document.createElement('div');
+        collapseCard.className = 'card card-body';
+        collapseCard.innerHTML = `<ul>
+									<li>Date applied: ${new Date(job.dateApplied).toLocaleDateString()}</li>
+									<li>Last updated: ${new Date(job.updateDate).toLocaleDateString()}</li>
+									<li>Description: ${job.description}</li>
+									<li>Note: ${job.note}</li>
+									</ul>`; 
+
+        collapseDiv.appendChild(collapseCard);
+
+        cardBodyDiv.appendChild(positionTitle);
+        cardBodyDiv.appendChild(companyText);
+        cardBodyDiv.appendChild(buttonGroupDiv);
+        cardBodyDiv.appendChild(collapseDiv);
+
+        cardDiv.appendChild(cardBodyDiv);
+
+        colDiv.appendChild(cardDiv);
+
+        jobsDiv.appendChild(colDiv);
+    });
 }
+
+
 
 function createNewJob(jobObjectJson){
 	let xhr = new XMLHttpRequest();
@@ -172,4 +259,22 @@ function createNewJob(jobObjectJson){
 		console.log(jobObjectJson);
 		
 		xhr.send(jobObjectJson);
+}
+
+
+
+//===========================================================================================
+
+function showJobsList(){
+	let jobListDiv = document.getElementById('jobListDiv');
+	let addNewJobListDiv = document.getElementById('addNewJobListDiv');
+	jobListDiv.style.visibility = "visible";
+	addNewJobListDiv.style.visibility = 'hidden';
+}
+
+function showCreateJob(){
+	let jobListDiv = document.getElementById('jobListDiv');
+	let addNewJobListDiv = document.getElementById('addNewJobListDiv');
+	jobListDiv.style.visibility = "hidden";
+	addNewJobListDiv.style.visibility = 'visible';
 }

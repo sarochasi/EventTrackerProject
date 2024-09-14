@@ -1,3 +1,12 @@
 body{
 	background-color: white;
 }
+
+#jobListDiv {
+    visibility: hidden;
+}
+
+/* Default visible state for addNewJobListDiv */
+#addNewJobListDiv {
+    visibility: visible;
+}

@@ -1,0 +1,30 @@
+<!-- createJob.html -->
+<h1>Create a New Job</h1>
+<div id="addNewJobListDiv">
+    <form name="newJobForm" id="newJobForm">
+        <input type="text" name="position" placeholder="Position">
+        <input type="text" name="company" placeholder="Company">
+        <input type="date" name="dateApplied" placeholder="Date Applied">
+        <input type="date" name="updateDate" placeholder="Update Date">
+        <input type="text" name="description" placeholder="Description">
+        <input type="text" name="note" placeholder="Note">
+        
+        <label for="status">Status</label>
+        <select name="status">
+            <option value="Not applied yet">Not applied yet</option>
+            <option value="Applied">Applied</option>
+            <option value="Interviewed">Interviewed</option>
+            <option value="Offered">Offered</option>
+            <option value="Rejected">Rejected</option>
+        </select>
+        
+        <label for="onsiteRemote">Onsite or Remote</label>
+        <select name="onsiteRemote">
+            <option value="Onsite">Onsite</option>
+            <option value="Remote">Remote</option>
+            <option value="Hybrid">Hybrid</option>
+        </select>
+        
+        <button class="btn btn-info" type="submit" name="submitJob">Add New Job</button>
+    </form>
+</div>
