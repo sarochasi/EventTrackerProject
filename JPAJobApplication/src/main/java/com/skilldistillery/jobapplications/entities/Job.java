@@ -1,8 +1,7 @@
+
 package com.skilldistillery.jobapplications.entities;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -14,7 +13,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -32,11 +30,11 @@ public class Job {
 	
 	@CreationTimestamp
 	@Column(name = "date_applied")
-	private LocalDate dateApplied;
+	private LocalDateTime dateApplied;
 	
 	@UpdateTimestamp
 	@Column(name = "date_updated")
-	private LocalDate updateDate;
+	private LocalDateTime updateDate;
 	
 	private String description;
 	
@@ -84,11 +82,11 @@ public class Job {
 		this.company = company;
 	}
 
-	public LocalDate getDateApplied() {
+	public LocalDateTime getDateApplied() {
 		return dateApplied;
 	}
 
-	public void setDateApplied(LocalDate dateApplied) {
+	public void setDateApplied(LocalDateTime dateApplied) {
 		this.dateApplied = dateApplied;
 	}
 
@@ -108,11 +106,11 @@ public class Job {
 		this.enabled = enabled;
 	}
 
-	public LocalDate getUpdateDate() {
+	public LocalDateTime getUpdateDate() {
 		return updateDate;
 	}
 
-	public void setUpdateDate(LocalDate updateDate) {
+	public void setUpdateDate(LocalDateTime updateDate) {
 		this.updateDate = updateDate;
 	}
 

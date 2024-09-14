@@ -1,3 +1,4 @@
+
 package com.skilldistillery.jobapplications.entities;
 
 import java.util.List;

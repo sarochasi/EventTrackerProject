@@ -1,3 +1,4 @@
+
 console.log('script.js loaded');
 
 window.addEventListener('load', function() {
@@ -54,16 +55,6 @@ function init() {
 	
 	
 		
-	let jobListLink = document.getElementById("goToList");
-	jobListLink.addEventListener('click',function(){
-		showJobsList();
-	});	
-		
-	let addLink = document.getElementById("goToAdd");
-	addLink.addEventListener('click',function(){
-		showCreateJob();
-	});	
-		
 }
 
 
@@ -78,7 +69,6 @@ function loadAllJobs() {
 				console.log(jobs);
 				displayJobList(jobs);
 			} else {
-				//FIXME
 				console.error('Error loading jobs.');
 				displayError("Error loading jobs.");
 			}
@@ -96,8 +86,8 @@ function displayError(errorMessage) {
 	jobListDiv.appendChild(errorElement);
 }
 
-function displayJobList1(jobs) {
-	let table = document.createElement('table');
+function displayJobList(jobs) {
+	let table = document.getElementById('jobTableDiv');
 	let thead = document.createElement('thead');
 	let tr = document.createElement('tr');
 
@@ -139,101 +129,6 @@ function displayJobList1(jobs) {
 }
 
 
-function displayJobList(jobs) {
-    let jobsDiv = document.getElementById('jobRow');
-    jobsDiv.textContent = ''; 
-
-    jobs.forEach(function(job) {
-		
-        let colDiv = document.createElement('div');
-        colDiv.className = 'col-md-4 mb-4';
-
-        let cardDiv = document.createElement('div');
-        cardDiv.className = 'card';
-        cardDiv.style.width = '18rem';
-
-        let cardBodyDiv = document.createElement('div');
-        cardBodyDiv.className = 'card-body';
-
-        // Job position title
-        let positionTitle = document.createElement('h5');
-        positionTitle.className = 'card-title';
-        positionTitle.textContent = job.position;
-
-        // Job company text
-        let companyText = document.createElement('p');
-        companyText.className = 'card-text';
-        companyText.innerHTML = `<strong>Company:</strong> ${job.company}`;
-
-        // Create button group (view, edit, delete)
-        let buttonGroupDiv = document.createElement('div');
-        buttonGroupDiv.className = 'd-flex justify-content-center align-items-center';
-
-        // View button with collapse functionality
-        let viewButton = document.createElement('a');
-        viewButton.className = 'btn btn-outline-info';
-        viewButton.setAttribute('data-bs-toggle', 'collapse');
-        viewButton.href = `#collapse${job.id}`;
-        viewButton.setAttribute('role', 'button');
-        viewButton.setAttribute('aria-expanded', 'false');
-        viewButton.setAttribute('aria-controls', `collapse${job.id}`);
-        viewButton.textContent = 'View';
-
-        // Edit button form
-        let editForm = document.createElement('form');
-        editForm.action = 'updateWorkoutForm.do';
-        editForm.method = 'GET';
-        editForm.innerHTML = `<input type="hidden" name="jobId" value="${job.id}" />`;
-        let editButton = document.createElement('button');
-        editButton.type = 'submit';
-        editButton.className = 'btn btn-outline-info';
-        editButton.textContent = 'Edit';
-        editForm.appendChild(editButton);
-
-        // Delete button form
-        let deleteForm = document.createElement('form');
-        deleteForm.action = 'deleteWorkout.do';
-        deleteForm.method = 'POST';
-        deleteForm.innerHTML = `<input type="hidden" name="jobId" value="${job.id}" />`;
-        let deleteButton = document.createElement('button');
-        deleteButton.type = 'submit';
-        deleteButton.className = 'btn btn-outline-info';
-        deleteButton.textContent = 'Delete';
-        deleteForm.appendChild(deleteButton);
-
-        // Add buttons to the button group
-        buttonGroupDiv.appendChild(viewButton);
-        buttonGroupDiv.appendChild(editForm);
-        buttonGroupDiv.appendChild(deleteForm);
-
-        // Collapse section for job details
-        let collapseDiv = document.createElement('div');
-        collapseDiv.className = 'collapse mt-2';
-        collapseDiv.id = `collapse${job.id}`;
-        let collapseCard = document.createElement('div');
-        collapseCard.className = 'card card-body';
-        collapseCard.innerHTML = `<ul>
-									<li>Date applied: ${new Date(job.dateApplied).toLocaleDateString()}</li>
-									<li>Last updated: ${new Date(job.updateDate).toLocaleDateString()}</li>
-									<li>Description: ${job.description}</li>
-									<li>Note: ${job.note}</li>
-									</ul>`; 
-
-        collapseDiv.appendChild(collapseCard);
-
-        cardBodyDiv.appendChild(positionTitle);
-        cardBodyDiv.appendChild(companyText);
-        cardBodyDiv.appendChild(buttonGroupDiv);
-        cardBodyDiv.appendChild(collapseDiv);
-
-        cardDiv.appendChild(cardBodyDiv);
-
-        colDiv.appendChild(cardDiv);
-
-        jobsDiv.appendChild(colDiv);
-    });
-}
-
 
 
 function createNewJob(jobObjectJson){
@@ -259,22 +154,4 @@ function createNewJob(jobObjectJson){
 		console.log(jobObjectJson);
 		
 		xhr.send(jobObjectJson);
-}
-
-
-
-//===========================================================================================
-
-function showJobsList(){
-	let jobListDiv = document.getElementById('jobListDiv');
-	let addNewJobListDiv = document.getElementById('addNewJobListDiv');
-	jobListDiv.style.visibility = "visible";
-	addNewJobListDiv.style.visibility = 'hidden';
-}
-
-function showCreateJob(){
-	let jobListDiv = document.getElementById('jobListDiv');
-	let addNewJobListDiv = document.getElementById('addNewJobListDiv');
-	jobListDiv.style.visibility = "hidden";
-	addNewJobListDiv.style.visibility = 'visible';
 }

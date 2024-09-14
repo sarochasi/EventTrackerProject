@@ -1,3 +1,4 @@
+
 package com.skilldistillery.jobapplications.entities;
 
 import static org.junit.jupiter.api.Assertions.*;

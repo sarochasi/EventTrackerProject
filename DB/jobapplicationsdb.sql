@@ -33,19 +33,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `status`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `status` ;
-
-CREATE TABLE IF NOT EXISTS `status` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `status` VARCHAR(45) NOT NULL,
-  `note` TEXT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `onsite_remote`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `onsite_remote` ;
@@ -53,6 +40,19 @@ DROP TABLE IF EXISTS `onsite_remote` ;
 CREATE TABLE IF NOT EXISTS `onsite_remote` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
+  `note` TEXT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `status`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `status` ;
+
+CREATE TABLE IF NOT EXISTS `status` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `status` VARCHAR(45) NULL,
   `note` TEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
@@ -70,28 +70,28 @@ CREATE TABLE IF NOT EXISTS `job` (
   `date_applied` DATETIME NULL,
   `description` TEXT NULL,
   `enabled` TINYINT NULL,
-  `date_updated` DATETIME NULL,
+  `date_updated` TIMESTAMP NULL,
   `user_id` INT NOT NULL,
   `note` VARCHAR(45) NULL,
-  `status_id` INT NOT NULL,
-  `onsite_remote_id` INT NOT NULL,
+  `onsite_remote_id` INT NULL,
+  `status_id` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_job_user1_idx` (`user_id` ASC) VISIBLE,
-  INDEX `fk_job_status1_idx` (`status_id` ASC) VISIBLE,
   INDEX `fk_job_onsite_remote1_idx` (`onsite_remote_id` ASC) VISIBLE,
+  INDEX `fk_job_status1_idx` (`status_id` ASC) VISIBLE,
   CONSTRAINT `fk_job_user1`
     FOREIGN KEY (`user_id`)
     REFERENCES `user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_job_status1`
-    FOREIGN KEY (`status_id`)
-    REFERENCES `status` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_job_onsite_remote1`
     FOREIGN KEY (`onsite_remote_id`)
     REFERENCES `onsite_remote` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_job_status1`
+    FOREIGN KEY (`status_id`)
+    REFERENCES `status` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -102,6 +102,9 @@ SET SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DAT
 CREATE USER 'job'@'localhost' IDENTIFIED BY 'job';
 
 GRANT SELECT, INSERT, TRIGGER, UPDATE, DELETE ON TABLE * TO 'job'@'localhost';
+GRANT ALL ON * TO 'job'@'localhost';
+GRANT SELECT ON TABLE * TO 'job'@'localhost';
+GRANT SELECT, INSERT, TRIGGER ON TABLE * TO 'job'@'localhost';
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
@@ -113,6 +116,18 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 START TRANSACTION;
 USE `jobapplicationsdb`;
 INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `enabled`) VALUES (1, 'admin', 'admin', 'admin', 'admin', NULL, 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `onsite_remote`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `jobapplicationsdb`;
+INSERT INTO `onsite_remote` (`id`, `name`, `note`) VALUES (1, 'Onsite', NULL);
+INSERT INTO `onsite_remote` (`id`, `name`, `note`) VALUES (2, 'Remote', NULL);
+INSERT INTO `onsite_remote` (`id`, `name`, `note`) VALUES (3, 'Hybrid', NULL);
 
 COMMIT;
 
@@ -132,24 +147,12 @@ COMMIT;
 
 
 -- -----------------------------------------------------
--- Data for table `onsite_remote`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `jobapplicationsdb`;
-INSERT INTO `onsite_remote` (`id`, `name`, `note`) VALUES (1, 'Onsite', NULL);
-INSERT INTO `onsite_remote` (`id`, `name`, `note`) VALUES (2, 'Remote', NULL);
-INSERT INTO `onsite_remote` (`id`, `name`, `note`) VALUES (3, 'Hybrid', NULL);
-
-COMMIT;
-
-
--- -----------------------------------------------------
 -- Data for table `job`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `jobapplicationsdb`;
-INSERT INTO `job` (`id`, `position`, `company`, `date_applied`, `description`, `enabled`, `date_updated`, `user_id`, `note`, `status_id`, `onsite_remote_id`) VALUES (1, 'Java developer', 'ABC inc', '2024-09-06', NULL, 1, NULL, 1, NULL, 1, 1);
-INSERT INTO `job` (`id`, `position`, `company`, `date_applied`, `description`, `enabled`, `date_updated`, `user_id`, `note`, `status_id`, `onsite_remote_id`) VALUES (2, 'Software engineer', 'Turbo Tech', NULL, NULL, 1, NULL, 1, NULL, 2, 2);
+INSERT INTO `job` (`id`, `position`, `company`, `date_applied`, `description`, `enabled`, `date_updated`, `user_id`, `note`, `onsite_remote_id`, `status_id`) VALUES (1, 'Java developer', 'ABC inc', '2024-09-06', NULL, 1, NULL, 1, NULL, 1, 1);
+INSERT INTO `job` (`id`, `position`, `company`, `date_applied`, `description`, `enabled`, `date_updated`, `user_id`, `note`, `onsite_remote_id`, `status_id`) VALUES (2, 'Software engineer', 'Turbo Tech', NULL, NULL, 1, NULL, 1, NULL, 2, 2);
 
 COMMIT;
 
