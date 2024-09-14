@@ -11,7 +11,7 @@ function init() {
 
 	//TODO -event listeners, etc.
 	let newJobForm = document.forms['newJobForm'];
-	if(newJobForm){
+	if (newJobForm) {
 		newJobForm.submitJob.addEventListener('click', function(e) {
 
 			e.preventDefault();
@@ -19,42 +19,39 @@ function init() {
 			let position = newJob.position.value;
 			let company = newJob.company.value;
 			let dateApplied = newJob.dateApplied.value;
-			let updateDate = newJob.updateDate.value;
+
 			let description = newJob.description.value;
 			let note = newJob.note.value;
-			let status = newJob.status.value;
-			let onsiteRemote = newJob.onsiteRemote.value;
+
 
 			console.log(position);
 			console.log(company);
 			console.log(dateApplied);
-			console.log(updateDate);
+
 			console.log(description);
 			console.log(note);
-			console.log(status);
-			console.log(onsiteRemote);
+
 
 			let jobObject = {
 				position: position,
 				company: company,
 				dateApplied: dateApplied,
-				updateDate: updateDate,
+
 				description: description,
 				note: note,
-				status: status,
-				onsiteRemote: onsiteRemote
+
 			};
 			console.log(jobObject);
 
 			let jobObjectJson = JSON.stringify(jobObject);
 			createNewJob(jobObjectJson);
 		});
-		}else{
-			console.error('newJobForm not found in the DOM.');
-		}
-	
-	
-		
+	} else {
+		console.error('newJobForm not found in the DOM.');
+	}
+
+
+
 }
 
 
@@ -91,13 +88,32 @@ function displayJobList(jobs) {
 	let thead = document.createElement('thead');
 	let tr = document.createElement('tr');
 
-	let nameHeader = document.createElement('th');
-	nameHeader.textContent = 'Position';
-	let abbrHeader = document.createElement('th');
-	abbrHeader.textContent = 'Company'
+	let positionHeader = document.createElement('th');
+	positionHeader.textContent = 'Position';
+	let companyHeader = document.createElement('th');
+	companyHeader.textContent = 'Company'
+	let dateAppliedHeader = document.createElement('th');
+	dateAppliedHeader.textContent = 'dateApplied'
+	let updateDateHeader = document.createElement('th');
+	updateDateHeader.textContent = 'updateDate'
+	let descriptionHeader = document.createElement('th');
+	descriptionHeader.textContent = 'description'
+	let noteHeader = document.createElement('th');
+	noteHeader.textContent = 'note'
+	let statusHeader = document.createElement('th');
+	statusHeader.textContent = 'status'
+	let onsiteRemoteHeader = document.createElement('th');
+	onsiteRemoteHeader.textContent = 'Onsite/Remote'
 
-	tr.appendChild(nameHeader);
-	tr.appendChild(abbrHeader);
+
+	tr.appendChild(positionHeader);
+	tr.appendChild(companyHeader);
+	tr.appendChild(dateAppliedHeader);
+	tr.appendChild(updateDateHeader);
+	tr.appendChild(descriptionHeader);
+	tr.appendChild(noteHeader);
+	tr.appendChild(statusHeader);
+	tr.appendChild(onsiteRemoteHeader);
 
 	thead.appendChild(tr);
 	table.appendChild(thead);
@@ -106,52 +122,124 @@ function displayJobList(jobs) {
 
 
 	jobs.forEach(function(job) {
-		let trBody = document.createElement('tr');
-		let tdPosition = document.createElement('td');
-		let tdCompany = document.createElement('td');
-		tdPosition.textContent = job.position;
 
-		tdCompany.textContent = job.company;
+		if (job.enabled === true) {
+			let trBody = document.createElement('tr');
+			let tdPosition = document.createElement('td');
+			let tdCompany = document.createElement('td');
+			let tdDateApplied = document.createElement('td');
+			let updatedDate = document.createElement('td');
+			let description = document.createElement('td');
+			let note = document.createElement('td');
+			let status = document.createElement('td');
+			let onsiteRemote = document.createElement('td');
 
-		trBody.appendChild(tdPosition);
+			let tdActions = document.createElement('td');
+			let editButton = document.createElement('button');
+			let deleteButton = document.createElement('button');
 
-		trBody.appendChild(tdCompany);
 
-		tbody.appendChild(trBody);
+			tdPosition.textContent = job.position;
+			tdCompany.textContent = job.company;
+			tdDateApplied.textContent = job.dateApplied;
+			updatedDate.textContent = job.updateDate;
+			description.textContent = job.description;
+			note.textContent = job.note;
+			status.textContent = job.status ? job.status.status : "No status";
+			onsiteRemote.textContent = job.onsiteRemote ? job.onsiteRemote.name : "N/A";
 
+			editButton.textContent = "Edit";
+			editButton.classList.add("btn", "btn-warning", "me-2");
+			editButton.addEventListener('click', function() {
+
+				editJob(job);
+			});
+
+
+			deleteButton.textContent = "Delete";
+			deleteButton.classList.add("btn", "btn-danger");
+			deleteButton.addEventListener('click', function() {
+
+				deleteJob(job.id, trBody);
+			});
+
+			tdActions.appendChild(editButton);
+			tdActions.appendChild(deleteButton);
+
+			trBody.appendChild(tdPosition);
+
+			trBody.appendChild(tdCompany);
+			trBody.appendChild(tdDateApplied);
+			trBody.appendChild(updatedDate);
+			trBody.appendChild(description);
+			trBody.appendChild(note);
+			trBody.appendChild(status);
+			trBody.appendChild(onsiteRemote);
+			trBody.appendChild(tdActions);
+
+			tbody.appendChild(trBody);
+
+		}
+
+		table.appendChild(tbody);
+
+		document.body.appendChild(table);
 	});
 
-
-
-	table.appendChild(tbody);
-
-	document.body.appendChild(table);
 }
 
 
-
-
-function createNewJob(jobObjectJson){
+function createNewJob(jobObjectJson) {
 	let xhr = new XMLHttpRequest();
-		xhr.open('POST', 'api/jobs', true);
+	xhr.open('POST', 'api/jobs', true);
 
-		xhr.setRequestHeader("Content-type", "application/json");
+	xhr.setRequestHeader("Content-Type", "application/json");
 
-		xhr.onreadystatechange = function() {
-			if (xhr.readyState === xhr.DONE) {
-				if (xhr.status === 200 || xhr.status == 201) {
-					let data = JSON.parse(xhr.responseText);
-					console.log(data);
-				}
-			} else {
-				console.error("POST request failed.");
-				console.error(xhr.status + ': ' + xhr.responseText);
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === xhr.DONE) {
+			if (xhr.status === 200 || xhr.status == 201) {
+				let data = JSON.parse(xhr.responseText);
+				console.log(data);
+				loadAllJobs();
 			}
-		};
-		
-		
-		console.log("jobObjectJson in CreateNewFilm")
-		console.log(jobObjectJson);
-		
-		xhr.send(jobObjectJson);
+		} else {
+			console.error("POST request failed.");
+			console.error(xhr.status + ': ' + xhr.responseText);
+		}
+	};
+
+
+	console.log("jobObjectJson in CreateNewFilm")
+	console.log(jobObjectJson);
+
+	xhr.send(jobObjectJson);
+}
+
+function disableJob(jobId) {
+	console.log(jobId);
+
+	let xhr = new XMLHttpRequest();
+
+	xhr.open('PUT', 'api/jobs/' + jobId + '/disable', true);
+	
+	xhr.setRequestHeader("Content-type", "application/json");
+
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === xhr.DONE) {
+			if (xhr.status === 200) {
+				let data = xhr.responseText;
+				console.log("Job disabled: " + job);
+				let job = JSON.parse(data);
+				loadAllJobs();
+				
+
+
+			} else {
+				console.log("Error deleting " + jobId + ' : ' + xhr.status);
+				displayError('Cannot delete job.')
+			}
+		}
+	}
+	xhr.send(JSON.stringify({enabled: false}));
+
 }

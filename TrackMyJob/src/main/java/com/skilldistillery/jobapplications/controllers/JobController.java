@@ -72,6 +72,7 @@ public class JobController {
 		return job;
 	}
 	
+	
 	@DeleteMapping("jobs/{jobId}")
 	public void delete(@PathVariable("jobId") int id, HttpServletResponse res) {
 		try {
@@ -101,5 +102,7 @@ public class JobController {
 		}
 		return jobs;
 	}
+	
+
 
 }

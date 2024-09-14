@@ -10,3 +10,11 @@ body{
 #addNewJobListDiv {
     visibility: visible;
 }
+
+#jobTableDiv {
+            border: 1px solid #dee2e6; /* Adds a border */
+            border-radius: 0.25rem; /* Rounded corners */
+            padding: 1rem; /* Padding inside the border */
+            background-color: #f8f9fa; /* Light background color */
+            margin-top: 20px; /* Space above the job table */
+        }
