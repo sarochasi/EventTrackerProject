@@ -13,16 +13,16 @@
 	crossorigin="anonymous">
 <link rel="stylesheet" href="css/main.css">
 
- <style>
-        /* Optional CSS to style the job table */
-        #jobTableDiv {
-            border: 1px solid #dee2e6; /* Adds a border */
-            border-radius: 0.25rem; /* Rounded corners */
-            padding: 1rem; /* Padding inside the border */
-            background-color: #f8f9fa; /* Light background color */
-            margin-top: 20px; /* Space above the job table */
-        }
-    </style>
+<style>
+/* Optional CSS to style the job table */
+#jobTableDiv {
+	border: 1px solid #dee2e6; /* Adds a border */
+	border-radius: 0.25rem; /* Rounded corners */
+	padding: 1rem; /* Padding inside the border */
+	background-color: #f8f9fa; /* Light background color */
+	margin-top: 20px; /* Space above the job table */
+}
+</style>
 </head>
 <body>
 
@@ -41,8 +41,7 @@
 						type="date" name="dateApplied" placeholder="dateApplied">
 					<!-- <input type="date" name="updateDate" placeholder="updateDate"> -->
 					<input type="text" name="description" placeholder="description">
-					<input type="text" name="note" placeholder="note">
-					<label
+					<input type="text" name="note" placeholder="note"> <label
 						for="status">Status</label> <select name="status">
 						<option value="Not applied yet">Not applied yet</option>
 						<option value="Applied">Applied</option>
@@ -67,8 +66,10 @@
 
 
 			<h1>Jobs List</h1>
-			
-		<div id="jobTableDiv" class="container text-center"></div>
+
+			<div id="jobTableDiv" class="text-center" >
+
+			</div>
 
 
 		</div>

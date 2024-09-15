@@ -84,7 +84,11 @@ function displayError(errorMessage) {
 }
 
 function displayJobList(jobs) {
-	let table = document.getElementById('jobTableDiv');
+	let tableContainer = document.getElementById('jobTableDiv');
+	tableContainer.innerHTML = '';
+	
+	let table = document.createElement('table');
+	table.classList.add('table', 'table-striped', 'table-hover');
 	let thead = document.createElement('thead');
 	let tr = document.createElement('tr');
 
@@ -104,6 +108,9 @@ function displayJobList(jobs) {
 	statusHeader.textContent = 'status'
 	let onsiteRemoteHeader = document.createElement('th');
 	onsiteRemoteHeader.textContent = 'Onsite/Remote'
+	let actionHeader = document.createElement('th');
+	actionHeader.textContent = ''
+
 
 
 	tr.appendChild(positionHeader);
@@ -114,6 +121,7 @@ function displayJobList(jobs) {
 	tr.appendChild(noteHeader);
 	tr.appendChild(statusHeader);
 	tr.appendChild(onsiteRemoteHeader);
+	tr.appendChild(actionHeader);
 
 	thead.appendChild(tr);
 	table.appendChild(thead);
@@ -161,6 +169,7 @@ function displayJobList(jobs) {
 			deleteButton.addEventListener('click', function() {
 
 				disableJob(job.id);
+				
 			});
 
 			tdActions.appendChild(editButton);
@@ -182,8 +191,8 @@ function displayJobList(jobs) {
 		}
 
 		table.appendChild(tbody);
-
-		document.body.appendChild(table);
+		tableContainer.appendChild(table);
+		//document.body.appendChild(table);
 	});
 
 }
@@ -200,6 +209,7 @@ function createNewJob(jobObjectJson) {
 			if (xhr.status === 200 || xhr.status == 201) {
 				let data = JSON.parse(xhr.responseText);
 				console.log(data);
+				
 				loadAllJobs();
 			}
 		} else {
@@ -230,6 +240,8 @@ function disableJob(jobId) {
 				let data = xhr.responseText;
 				let job = JSON.parse(data);
 				console.log("Job disabled: " + job);
+				
+				
 				loadAllJobs();
 				
 
