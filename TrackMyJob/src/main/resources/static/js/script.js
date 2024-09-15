@@ -45,6 +45,7 @@ function init() {
 
 			let jobObjectJson = JSON.stringify(jobObject);
 			createNewJob(jobObjectJson);
+			hideNewForm()
 		});
 	} else {
 		console.error('newJobForm not found in the DOM.');
@@ -54,15 +55,23 @@ function init() {
 	addLink.addEventListener('click',function(){
 		showNewForm();
 	});
-
-}
+	
+	
 
 function showNewForm() {
 	let addNewJobListDiv = document.getElementById('addNewJobListDiv');
 	let createNewJobButton = document.getElementById('createNewJobButton');
 	
-	addNewJobListDiv.style.display = 'block'; // Show the form
-	createNewJobButton.style.display = 'none'; // Optionally hide the button
+	addNewJobListDiv.style.display = 'block'; 
+	createNewJobButton.style.display = 'none'; 
+}
+
+function hideNewForm() {
+	let addNewJobListDiv = document.getElementById('addNewJobListDiv');
+	let createNewJobButton = document.getElementById('createNewJobButton');
+	
+	addNewJobListDiv.style.display = 'none'; 
+	createNewJobButton.style.display = 'block'; 
 }
 
 function loadAllJobs() {
@@ -294,4 +303,4 @@ function editJob(jobObjectJson){
 		}
 		xhr.send(jobObjectJson);
 
-}
+}}
