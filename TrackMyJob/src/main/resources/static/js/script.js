@@ -160,7 +160,7 @@ function displayJobList(jobs) {
 			deleteButton.classList.add("btn", "btn-danger");
 			deleteButton.addEventListener('click', function() {
 
-				deleteJob(job.id, trBody);
+				disableJob(job.id);
 			});
 
 			tdActions.appendChild(editButton);
@@ -216,11 +216,11 @@ function createNewJob(jobObjectJson) {
 }
 
 function disableJob(jobId) {
-	console.log(jobId);
+	console.log("Disabling job with ID: " + jobId);
 
 	let xhr = new XMLHttpRequest();
 
-	xhr.open('PUT', 'api/jobs/' + jobId + '/disable', true);
+	xhr.open('DELETE', 'api/jobs/' + jobId, true);
 	
 	xhr.setRequestHeader("Content-type", "application/json");
 
@@ -228,8 +228,8 @@ function disableJob(jobId) {
 		if (xhr.readyState === xhr.DONE) {
 			if (xhr.status === 200) {
 				let data = xhr.responseText;
-				console.log("Job disabled: " + job);
 				let job = JSON.parse(data);
+				console.log("Job disabled: " + job);
 				loadAllJobs();
 				
 
