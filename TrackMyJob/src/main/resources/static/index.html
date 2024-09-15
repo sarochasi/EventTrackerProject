@@ -35,20 +35,23 @@
 			
 			<div class="b-example-divider"></div>
 			
-			<a id="createNewJobButton" class="btn btn-primary">Create New Job</a>
-			
-			
-			
-		
 			
 
-			<div id="addNewJobListDiv" class="form-container" style="display: none;">
-				<form name="newJobForm" id="newJobForm">
-					<h2>Add New Job</h2>
+			<div id="editJobButton" class="form-container" style="display: none;">
+				<form name="editJobForm" id="editJobForm">
+					<h2>Edit Job</h2>
 
+					<input type="hidden" name="jobId" id="jobId">
+				
+					<div class="form-group">
+						<label for="id">ID</label> <input type="number"
+							name="id" id="id" placeholder="id" 
+							required>
+					</div>
+					
 					<div class="form-group">
 						<label for="position">Position</label> <input type="text"
-							name="position" id="position" placeholder="Enter job position"
+							name="position" id="jobPosition" placeholder="Enter job position" 
 							required>
 					</div>
 
@@ -95,7 +98,7 @@
 					</div>
 
 					<button class="btn btn-outline-primary" type="submit"
-						name="submitJob">Add New Job</button>
+						name="updateJob" id="updateJob">Update job</button>
 				</form>
 			</div>
 			

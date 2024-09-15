@@ -57,6 +57,72 @@ function init() {
 	});
 	
 	
+	
+	
+	let updateJobForm = document.forms['editJobForm'];
+	    if (updateJobForm) {
+	        updateJobForm.updateJob.addEventListener('click', function(e) {
+	           
+				
+				console.log("init() called")
+
+	            let jobId = updateJobForm.jobId.value;
+				
+				console.log("jobId in init: " + jobId);
+				
+	            let position = updateJobForm.position.value;
+	            let company = updateJobForm.company.value;
+	            let dateApplied = updateJobForm.dateApplied.value;
+	            let description = updateJobForm.description.value;
+	            let note = updateJobForm.note.value;
+	            let status = updateJobForm.status.value;
+	            let onsiteRemote = updateJobForm.onsiteRemote.value;
+
+	            let jobObject = {
+	                position: position,
+	                company: company,
+	                dateApplied: dateApplied,
+	                description: description,
+	                note: note,
+	                status: status,
+	                onsiteRemote: onsiteRemote
+	            };
+
+	            let jobObjectJson = JSON.stringify(jobObject);
+				console.log("jobId in init(): " + jobId);
+	            editJob(jobId, jobObjectJson);
+
+	        });
+	    } else {
+	        console.error('editJobForm not found in the DOM.');
+	    }
+	}
+
+function showEditForm(jobId, job){
+	console.log("jobId in showEditForm: " + jobId);
+	let editJobForm = document.getElementById('editJobButton'); 
+	    let positionInput = document.getElementById('jobPosition');
+	    let companyInput = document.getElementById('company');
+	    let dateAppliedInput = document.getElementById('dateApplied');
+	    let descriptionInput = document.getElementById('description');
+	    let noteInput = document.getElementById('note');
+	    let statusSelect = document.getElementById('status');
+	    let onsiteRemoteSelect = document.getElementById('onsiteRemote');
+
+		let jobIdField = document.getElementById('jobId');
+		jobIdField.value = jobId;
+		
+	    positionInput.value = job.position;
+	    companyInput.value = job.company;
+	    dateAppliedInput.value = job.dateApplied;
+	    descriptionInput.value = job.description;
+	    noteInput.value = job.note;
+	    statusSelect.value = job.status;
+	    onsiteRemoteSelect.value = job.onsiteRemote;
+
+
+	    editJobForm.style.display = "block";
+}	
 
 function showNewForm() {
 	let addNewJobListDiv = document.getElementById('addNewJobListDiv');
@@ -110,6 +176,8 @@ function displayJobList(jobs) {
 	let thead = document.createElement('thead');
 	let tr = document.createElement('tr');
 
+	let idHeader = document.createElement('th');
+	idHeader.textContent = 'ID';
 	let positionHeader = document.createElement('th');
 	positionHeader.textContent = 'Position';
 	let companyHeader = document.createElement('th');
@@ -131,6 +199,7 @@ function displayJobList(jobs) {
 
 
 
+	tr.appendChild(idHeader);
 	tr.appendChild(positionHeader);
 	tr.appendChild(companyHeader);
 	tr.appendChild(dateAppliedHeader);
@@ -151,6 +220,7 @@ function displayJobList(jobs) {
 
 		if (job.enabled === true) {
 			let trBody = document.createElement('tr');
+			let tdId = document.createElement('td');
 			let tdPosition = document.createElement('td');
 			let tdCompany = document.createElement('td');
 			let tdDateApplied = document.createElement('td');
@@ -165,6 +235,7 @@ function displayJobList(jobs) {
 			let deleteButton = document.createElement('button');
 
 
+			tdId.textContent = job.id;
 			tdPosition.textContent = job.position;
 			tdCompany.textContent = job.company;
 			tdDateApplied.textContent = job.dateApplied;
@@ -178,7 +249,7 @@ function displayJobList(jobs) {
 			editButton.classList.add("btn", "btn-warning", "me-2");
 			editButton.addEventListener('click', function() {
 
-				editJob(job);
+				showEditForm(job.id, job);
 			});
 
 
@@ -194,6 +265,7 @@ function displayJobList(jobs) {
 			tdActions.appendChild(editButton);
 			tdActions.appendChild(deleteButton);
 
+			trBody.appendChild(tdId);
 			trBody.appendChild(tdPosition);
 
 			trBody.appendChild(tdCompany);
@@ -275,8 +347,9 @@ function disableJob(jobId) {
 
 }
 
-function editJob(jobObjectJson){
+function editJob(jobId, jobObjectJson){
 	console.log("Editing job " + jobObjectJson);
+	console.log("jobId in editJob " + jobId);
 	let xhr = new XMLHttpRequest();
 
 		xhr.open('PUT', 'api/jobs/' + jobId, true);
@@ -292,6 +365,7 @@ function editJob(jobObjectJson){
 
 
 					loadAllJobs();
+					document.getElementById('editJobButton').style.display = "none";
 
 
 
@@ -303,4 +377,4 @@ function editJob(jobObjectJson){
 		}
 		xhr.send(jobObjectJson);
 
-}}
+}
