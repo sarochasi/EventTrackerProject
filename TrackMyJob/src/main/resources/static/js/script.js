@@ -52,92 +52,96 @@ function init() {
 	}
 
 	let addLink = document.getElementById("createNewJobButton");
-	addLink.addEventListener('click',function(){
+	addLink.addEventListener('click', function() {
 		showNewForm();
 	});
-	
-	
-	
-	
+
+
+
+
 	let updateJobForm = document.forms['editJobForm'];
-	    if (updateJobForm) {
-	        updateJobForm.updateJob.addEventListener('click', function(e) {
-	           
-				
-				console.log("init() called")
+	if (updateJobForm) {
+		updateJobForm.updateJob.addEventListener('click', function(e) {
 
-	            let jobId = updateJobForm.jobId.value;
-				
-				console.log("jobId in init: " + jobId);
-				
-	            let position = updateJobForm.position.value;
-	            let company = updateJobForm.company.value;
-	            let dateApplied = updateJobForm.dateApplied.value;
-	            let description = updateJobForm.description.value;
-	            let note = updateJobForm.note.value;
-	            let status = updateJobForm.status.value;
-	            let onsiteRemote = updateJobForm.onsiteRemote.value;
 
-	            let jobObject = {
-	                position: position,
-	                company: company,
-	                dateApplied: dateApplied,
-	                description: description,
-	                note: note,
-	                status: status,
-	                onsiteRemote: onsiteRemote
-	            };
+			console.log("init() called")
 
-	            let jobObjectJson = JSON.stringify(jobObject);
-				console.log("jobId in init(): " + jobId);
-	            editJob(jobId, jobObjectJson);
+			let jobId = updateJobForm.jobId.value;
 
-	        });
-	    } else {
-	        console.error('editJobForm not found in the DOM.');
-	    }
+			console.log("jobId in init: " + jobId);
+
+			let position = updateJobForm.position.value;
+			let company = updateJobForm.company.value;
+			let dateApplied = updateJobForm.dateApplied.value;
+			let description = updateJobForm.description.value;
+			let note = updateJobForm.note.value;
+			let statusSelect = updateJobForm.status;
+			let onsiteRemoteSelect = updateJobForm.onsiteRemote;
+			let selectedStatus = statusSelect.options[statusSelect.selectedIndex].value;
+			let selectedOnsiteRemote = onsiteRemoteSelect.options[onsiteRemoteSelect.selectedIndex].value;
+			
+			console.log("status in init(): " + selectedStatus);
+			
+			let jobObject = {
+				position: position,
+				company: company,
+				dateApplied: dateApplied,
+				description: description,
+				note: note,
+				status: selectedStatus,
+				onsiteRemote: selectedOnsiteRemote
+			};
+
+			let jobObjectJson = JSON.stringify(jobObject);
+			console.log("jobId in init(): " + jobId);
+			editJob(jobId, jobObjectJson);
+
+		});
+	} else {
+		console.error('editJobForm not found in the DOM.');
 	}
+}
 
-function showEditForm(jobId, job){
+function showEditForm(jobId, job) {
 	console.log("jobId in showEditForm: " + jobId);
-	let editJobForm = document.getElementById('editJobButton'); 
-	    let positionInput = document.getElementById('jobPosition');
-	    let companyInput = document.getElementById('company');
-	    let dateAppliedInput = document.getElementById('dateApplied');
-	    let descriptionInput = document.getElementById('description');
-	    let noteInput = document.getElementById('note');
-	    let statusSelect = document.getElementById('status');
-	    let onsiteRemoteSelect = document.getElementById('onsiteRemote');
+	let editJobForm = document.getElementById('editJobButton');
+	let positionInput = document.getElementById('jobPosition');
+	let companyInput = document.getElementById('company');
+	let dateAppliedInput = document.getElementById('dateApplied');
+	let descriptionInput = document.getElementById('description');
+	let noteInput = document.getElementById('note');
+	let statusSelect = document.getElementById('status');
+	let onsiteRemoteSelect = document.getElementById('onsiteRemote');
 
-		let jobIdField = document.getElementById('jobId');
-		jobIdField.value = jobId;
-		
-	    positionInput.value = job.position;
-	    companyInput.value = job.company;
-	    dateAppliedInput.value = job.dateApplied;
-	    descriptionInput.value = job.description;
-	    noteInput.value = job.note;
-	    statusSelect.value = job.status;
-	    onsiteRemoteSelect.value = job.onsiteRemote;
+	let jobIdField = document.getElementById('jobId');
+	jobIdField.value = jobId;
+
+	positionInput.value = job.position;
+	companyInput.value = job.company;
+	dateAppliedInput.value = job.dateApplied;
+	descriptionInput.value = job.description;
+	noteInput.value = job.note;
+	statusSelect.value = job.status;
+	onsiteRemoteSelect.value = job.onsiteRemote;
 
 
-	    editJobForm.style.display = "block";
-}	
+	editJobForm.style.display = "block";
+}
 
 function showNewForm() {
 	let addNewJobListDiv = document.getElementById('addNewJobListDiv');
 	let createNewJobButton = document.getElementById('createNewJobButton');
-	
-	addNewJobListDiv.style.display = 'block'; 
-	createNewJobButton.style.display = 'none'; 
+
+	addNewJobListDiv.style.display = 'block';
+	createNewJobButton.style.display = 'none';
 }
 
 function hideNewForm() {
 	let addNewJobListDiv = document.getElementById('addNewJobListDiv');
 	let createNewJobButton = document.getElementById('createNewJobButton');
-	
-	addNewJobListDiv.style.display = 'none'; 
-	createNewJobButton.style.display = 'block'; 
+
+	addNewJobListDiv.style.display = 'none';
+	createNewJobButton.style.display = 'block';
 }
 
 function loadAllJobs() {
@@ -347,34 +351,34 @@ function disableJob(jobId) {
 
 }
 
-function editJob(jobId, jobObjectJson){
+function editJob(jobId, jobObjectJson) {
 	console.log("Editing job " + jobObjectJson);
 	console.log("jobId in editJob " + jobId);
 	let xhr = new XMLHttpRequest();
 
-		xhr.open('PUT', 'api/jobs/' + jobId, true);
+	xhr.open('PUT', 'api/jobs/' + jobId, true);
 
-		xhr.setRequestHeader("Content-type", "application/json");
+	xhr.setRequestHeader("Content-type", "application/json");
 
-		xhr.onreadystatechange = function() {
-			if (xhr.readyState === xhr.DONE) {
-				if (xhr.status === 200) {
-					let data = xhr.responseText;
-					let job = JSON.parse(data);
-					console.log("Job edited: " + job);
-
-
-					loadAllJobs();
-					document.getElementById('editJobButton').style.display = "none";
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === xhr.DONE) {
+			if (xhr.status === 200) {
+				let data = xhr.responseText;
+				let job = JSON.parse(data);
+				console.log("Job edited: " + job);
 
 
+				loadAllJobs();
+				document.getElementById('editJobButton').style.display = "none";
 
-				} else {
-					console.log("Error editing " + jobId + ' : ' + xhr.status);
-					displayError('Cannot edit job.')
-				}
+
+
+			} else {
+				console.log("Error editing " + jobId + ' : ' + xhr.status);
+				displayError('Cannot edit job.')
 			}
 		}
-		xhr.send(jobObjectJson);
+	}
+	xhr.send(jobObjectJson);
 
 }
