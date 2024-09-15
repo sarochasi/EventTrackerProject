@@ -50,11 +50,20 @@ function init() {
 		console.error('newJobForm not found in the DOM.');
 	}
 
-
+	let addLink = document.getElementById("createNewJobButton");
+	addLink.addEventListener('click',function(){
+		showNewForm();
+	});
 
 }
 
-
+function showNewForm() {
+	let addNewJobListDiv = document.getElementById('addNewJobListDiv');
+	let createNewJobButton = document.getElementById('createNewJobButton');
+	
+	addNewJobListDiv.style.display = 'block'; // Show the form
+	createNewJobButton.style.display = 'none'; // Optionally hide the button
+}
 
 function loadAllJobs() {
 	let xhr = new XMLHttpRequest();
@@ -86,7 +95,7 @@ function displayError(errorMessage) {
 function displayJobList(jobs) {
 	let tableContainer = document.getElementById('jobTableDiv');
 	tableContainer.innerHTML = '';
-	
+
 	let table = document.createElement('table');
 	table.classList.add('table', 'table-striped', 'table-hover');
 	let thead = document.createElement('thead');
@@ -169,7 +178,8 @@ function displayJobList(jobs) {
 			deleteButton.addEventListener('click', function() {
 
 				disableJob(job.id);
-				
+				trBody.remove();
+
 			});
 
 			tdActions.appendChild(editButton);
@@ -209,7 +219,7 @@ function createNewJob(jobObjectJson) {
 			if (xhr.status === 200 || xhr.status == 201) {
 				let data = JSON.parse(xhr.responseText);
 				console.log(data);
-				
+
 				loadAllJobs();
 			}
 		} else {
@@ -231,7 +241,7 @@ function disableJob(jobId) {
 	let xhr = new XMLHttpRequest();
 
 	xhr.open('DELETE', 'api/jobs/' + jobId, true);
-	
+
 	xhr.setRequestHeader("Content-type", "application/json");
 
 	xhr.onreadystatechange = function() {
@@ -240,10 +250,10 @@ function disableJob(jobId) {
 				let data = xhr.responseText;
 				let job = JSON.parse(data);
 				console.log("Job disabled: " + job);
-				
-				
+
+
 				loadAllJobs();
-				
+
 
 
 			} else {
@@ -252,6 +262,36 @@ function disableJob(jobId) {
 			}
 		}
 	}
-	xhr.send(JSON.stringify({enabled: false}));
+	xhr.send(JSON.stringify({ enabled: false }));
+
+}
+
+function editJob(jobObjectJson){
+	console.log("Editing job " + jobObjectJson);
+	let xhr = new XMLHttpRequest();
+
+		xhr.open('PUT', 'api/jobs/' + jobId, true);
+
+		xhr.setRequestHeader("Content-type", "application/json");
+
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState === xhr.DONE) {
+				if (xhr.status === 200) {
+					let data = xhr.responseText;
+					let job = JSON.parse(data);
+					console.log("Job edited: " + job);
+
+
+					loadAllJobs();
+
+
+
+				} else {
+					console.log("Error editing " + jobId + ' : ' + xhr.status);
+					displayError('Cannot edit job.')
+				}
+			}
+		}
+		xhr.send(jobObjectJson);
 
 }
