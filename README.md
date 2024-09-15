@@ -6,15 +6,6 @@ TrackMyJob is a web application designed to help users track thier job applicati
 
 ## Database Schema
 
-The front-end of TrackMyJob is built using HTML, CSS, and JavaScript, with AJAX (Asynchronous JavaScript and XML) requests handled via the XMLHttpRequest object (XHR). This enables seamless interaction between the client and server without reloading the page.
-
-### Key Functionalities
-
-* Create New Job: The user fills out a form with job details such as position, company, date applied, status, and onsite/remote options. When the "Add New Job" button is clicked, the form data is sent as a JSON object to the server via an AJAX POST request.
-* Edit Job: When a user clicks the "Edit" button, the job form is populated with the current details of the selected job. Upon updating the job, an AJAX PUT request is made to save the changes.
-* Delete Job: Users can delete a job entry by clicking the "Delete" button. This action triggers an AJAX DELETE request, which disables the job entry in the backend.
-* View Job Details: The user can retrieve job information without page reloads by clicking on job entries, which sends an AJAX GET request to display the selected job's details dynamically.
-
 ## REST Endpoints
 
 | Return Type     | Route                 | Functionality            |
@@ -33,6 +24,15 @@ The front-end of TrackMyJob is built using HTML, CSS, and JavaScript, with AJAX 
 | `List<job>`    |`GET onsiteremotes/{id}/jobs`| Get all jobs of a specific onsite/remote|
 
 ## HTML/JavaScript Front End using XHR/AJAX
+
+The front-end of TrackMyJob is built using HTML, CSS, and JavaScript, with AJAX (Asynchronous JavaScript and XML) requests handled via the XMLHttpRequest object (XHR). This enables seamless interaction between the client and server without reloading the page.
+
+### Key Functionalities
+
+* Create New Job: The user fills out a form with job details such as position, company, date applied, status, and onsite/remote options. When the "Add New Job" button is clicked, the form data is sent as a JSON object to the server via an AJAX POST request.
+* Edit Job: When a user clicks the "Edit" button, the job form is populated with the current details of the selected job. Upon updating the job, an AJAX PUT request is made to save the changes.
+* Delete Job: Users can delete a job entry by clicking the "Delete" button. This action triggers an AJAX DELETE request, which disables the job entry in the backend.
+* View Job Details: The user can retrieve job information without page reloads by clicking on job entries, which sends an AJAX GET request to display the selected job's details dynamically.
 
 ## Technologies Used
 
