@@ -6,6 +6,8 @@ TrackMyJob is a web application designed to help users track thier job applicati
 
 ## Database Schema
 
+<img width="576" alt="Screenshot 2024-09-14 at 3 43 45 PM" src="https://github.com/user-attachments/assets/f69516f6-1f0a-445b-95ec-f6b7f39cb9fe">
+
 ## REST Endpoints
 
 | Return Type     | Route                 | Functionality            |
