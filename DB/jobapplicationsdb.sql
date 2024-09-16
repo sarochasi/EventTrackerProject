@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `job` (
   `description` TEXT NULL,
   `enabled` TINYINT NULL,
   `date_updated` TIMESTAMP NULL,
-  `user_id` INT NOT NULL,
+  `user_id` INT NULL,
   `note` VARCHAR(45) NULL,
   `onsite_remote_id` INT NULL,
   `status_id` INT NULL,

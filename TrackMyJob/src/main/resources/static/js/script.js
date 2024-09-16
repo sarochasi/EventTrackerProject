@@ -20,6 +20,7 @@ function init() {
 			let company = newJob.company.value;
 			let dateApplied = newJob.dateApplied.value;
 
+			let status = newJob.status.value;
 			let description = newJob.description.value;
 			let note = newJob.note.value;
 
@@ -28,6 +29,7 @@ function init() {
 			console.log(company);
 			console.log(dateApplied);
 
+			console.log(status);
 			console.log(description);
 			console.log(note);
 
@@ -36,7 +38,7 @@ function init() {
 				position: position,
 				company: company,
 				dateApplied: dateApplied,
-
+				status: status,
 				description: description,
 				note: note,
 
