@@ -1,3 +1,3 @@
 export const environment = {
-  baseUrl: "/TrackMyJob/"
+  baseUrl: '/TrackMyJob/'
 };
