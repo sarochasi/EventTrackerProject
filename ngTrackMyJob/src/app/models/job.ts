@@ -1,3 +1,6 @@
+import { OnsiteRemote } from "./onsite-remote";
+import { Status } from "./status";
+
 export class Job{
   id: number;
   position: string;
@@ -7,7 +10,8 @@ export class Job{
   description: string;
   enabled: boolean;
   note:string;
-  status:string;
+  status:Status;
+  onsiteRemote: OnsiteRemote
 
   constructor(
     id: number = 0,
@@ -18,7 +22,8 @@ export class Job{
     description: string ='',
     enabled: boolean = true,
     note:string ='',
-    status:string = ''
+    status: Status = new Status(),
+    onsiteRemote: OnsiteRemote = new OnsiteRemote()
 
   ){
     this.id = id;
@@ -29,7 +34,8 @@ export class Job{
     this.description = description;
     this.enabled = enabled;
     this.note = note;
-    this.status = status
+    this.status = status;
+    this.onsiteRemote = onsiteRemote;
   }
 
 }

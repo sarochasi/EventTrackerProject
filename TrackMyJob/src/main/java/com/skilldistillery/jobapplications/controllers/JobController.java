@@ -61,6 +61,7 @@ public class JobController {
 	public Job updateJob(@PathVariable("jobId") Integer jobId, 
 			@RequestBody Job job, HttpServletResponse res) {
 		try {
+			System.out.println(job);
 			job = jobService.update(jobId, job);
 			if(job == null){
 				res.setStatus(404);

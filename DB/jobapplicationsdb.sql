@@ -52,7 +52,7 @@ DROP TABLE IF EXISTS `status` ;
 
 CREATE TABLE IF NOT EXISTS `status` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `status` VARCHAR(45) NULL,
+  `status` VARCHAR(45) NOT NULL,
   `note` TEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
@@ -73,8 +73,8 @@ CREATE TABLE IF NOT EXISTS `job` (
   `date_updated` TIMESTAMP NULL,
   `user_id` INT NULL,
   `note` VARCHAR(45) NULL,
-  `onsite_remote_id` INT NULL,
-  `status_id` INT NULL,
+  `onsite_remote_id` INT NOT NULL,
+  `status_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_job_user1_idx` (`user_id` ASC) VISIBLE,
   INDEX `fk_job_onsite_remote1_idx` (`onsite_remote_id` ASC) VISIBLE,

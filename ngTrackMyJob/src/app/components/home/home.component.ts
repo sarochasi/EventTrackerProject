@@ -1,9 +1,11 @@
+import { OnsiteRemote } from './../../models/onsite-remote';
 import { CommonModule } from '@angular/common';
-import { Job } from '../../../models/job';
+import { Job } from '../../models/job';
 import { JobService } from './../../services/job.service';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { catchError, throwError } from 'rxjs';
+import { Status } from '../../models/status';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +20,8 @@ import { catchError, throwError } from 'rxjs';
 export class HomeComponent implements OnInit {
 
   jobs: Job[] = [];
+  statuses: Status[] = [];
+  OnsiteRemotes: OnsiteRemote[] = [];
   newJob: Job = new Job();
   selected: Job | null = null;
   editJob: Job | null = null;
@@ -36,14 +40,30 @@ export class HomeComponent implements OnInit {
         this.jobs = jobList;
       },
       error: (fail) => {
-        console.error('HomwComponent.reloadJobs: error retrieving list');
+        console.error('HomeComponent.reloadJobs: error retrieving list');
         console.error(fail);
       }
     });
   }
 
+  loadStatuses(): void{
+    this.jobService.getStatuses().subscribe(
+      {
+        next: (statusList) =>{
+          this.statuses = statusList;
+          console.log(this.statuses);
+        },
+        error: (fail) => {
+          console.error('HomeComponent.loadStatuses: error loading statuses');
+          console.error(fail);
+        }
+      }
+    );
+  }
+
   displayJob(job: Job): void{
     this.selected = job;
+    console.log(this.selected);
   }
 
   createJob(): void{
@@ -60,8 +80,11 @@ export class HomeComponent implements OnInit {
   }
 
   setEditJob(){
+
     if(this.selected){
+
       this.editJob = {...this.selected};
+      console.log(this.editJob);
     }
   }
 
@@ -72,8 +95,10 @@ export class HomeComponent implements OnInit {
       {
         next: (updatedJob) => {
           if(setSelected){
+            this.selected = null;
             this.editJob = null;
             this.reloadJobs();
+
           }},
           error: (err) => {
             console.error('Error updating job', err);

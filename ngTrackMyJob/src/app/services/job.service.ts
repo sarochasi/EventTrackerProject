@@ -2,13 +2,16 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
-import { Job } from '../../models/job';
+import { Job } from '../models/job';
+import { Status } from '../models/status';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class JobService {
+
+
 
   url = environment.baseUrl + "api/jobs";
   constructor(
@@ -26,6 +29,17 @@ export class JobService {
     );
   }
 
+  getStatuses(): Observable<Status[]> {
+    return this.http.get<Status[]>(environment.baseUrl + 'api/statuses').pipe(
+      catchError((err: any) => {
+        console.error('JobService.getStatuses(): error retrieving statuses', err);
+        return throwError(
+          () => new Error('JobService.getStatuses(): error retrieving statuses')
+        );
+      })
+    );
+  }
+
   create(job: Job): Observable<Job>{
     return this.http.post<Job>(this.url, job).pipe(
       catchError((err:any) => {
@@ -38,6 +52,7 @@ export class JobService {
   }
 
   update(updateJob: Job): Observable<Job>{
+    console.log(updateJob);
     return this.http.put<Job>(`${this.url}/${updateJob.id}`, updateJob).pipe(
       catchError((err: any) => {
         console.log('JobService.update(): error updating job', err);

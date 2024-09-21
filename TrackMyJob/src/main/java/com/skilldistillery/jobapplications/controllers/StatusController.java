@@ -24,4 +24,5 @@ public class StatusController {
 	public List<Status> index(){
 		return statusService.listAllStatus();
 	}
+	
 }

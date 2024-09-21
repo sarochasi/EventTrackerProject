@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.skilldistillery.jobapplications.entities.Job;
+import com.skilldistillery.jobapplications.entities.OnsiteRemote;
+import com.skilldistillery.jobapplications.entities.Status;
 import com.skilldistillery.jobapplications.repositories.JobRepository;
 import com.skilldistillery.jobapplications.repositories.OnsiteRemoteRepository;
 import com.skilldistillery.jobapplications.repositories.StatusRepository;
@@ -42,6 +44,14 @@ public class JobServiceImpl implements JobService {
 	@Override
 	public Job create(Job newJob) {
 		newJob.setEnabled(true);
+		if(newJob.getStatus() == null) {
+			Status status = new Status();
+			status.setId(1);
+			OnsiteRemote onsiteRemote = new OnsiteRemote();
+			onsiteRemote.setId(1);
+			newJob.setStatus(status);
+			newJob.setOnsiteRemote(onsiteRemote);
+		}
 		return jobRepo.saveAndFlush(newJob);
 
 	}

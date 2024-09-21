@@ -12,19 +12,25 @@
           <tr>
             <th>Position</th>
             <th>Company</th>
+            <th>Onsite/Remote</th>
+            <th>Status</th>
             <th>Date Applied</th>
-            <th>Description</th>
+
+
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let job of jobs" (click)="displayJob(job)">
+          <tr *ngFor="let job of jobs" >
             <td>{{ job.position }}</td>
             <td>{{ job.company }}</td>
+            <td>{{ job.onsiteRemote.name }}</td>
+            <td>{{ job.status.status }}</td>
             <td>{{ job.dateApplied }}</td>
-            <td>{{ job.description }}</td>
+
+
             <td>
-              <button class="btn btn-sm btn-primary" (click)="updateJob(job)">Details</button>
+              <button class="btn btn-sm btn-primary" (click)="displayJob(job)">Details</button>
               <button class="btn btn-sm btn-danger" (click)="deleteJob(job.id)">Delete</button>
             </td>
           </tr>
@@ -44,12 +50,13 @@
     <p><strong>Company:</strong> {{ selected.company }}</p>
     <p><strong>Date Applied:</strong> {{ selected.dateApplied || 'N/A' }}</p>
     <p><strong>Last Updated:</strong> {{ selected.updateDate || 'N/A' }}</p>
-    <p><strong>Status:</strong> {{ selected.status || 'N/A' }}</p>
+    <p><strong>Status:</strong> {{ selected.status.status || 'N/A' }}</p>
+    <p><strong>Onsite/Remote:</strong> {{ selected.onsiteRemote.name || 'N/A' }}</p>
     <p><strong>Description:</strong> {{ selected.description }}</p>
     <p><strong>Note:</strong> {{ selected.note || 'N/A' }}</p>
 
     <div class="d-flex justify-content-between">
-      <!-- <button class="btn btn-secondary" (click)="clearSelectedJob()">Close</button> -->
+
       <button class="btn btn-primary" (click)="setEditJob()">Edit Job</button>
     </div>
   </div>
@@ -62,7 +69,7 @@
       <h5 class="mb-0">Edit Job Application</h5>
     </div>
     <div class="card-body">
-      <form (ngSubmit)="createJob()" #jobForm="ngForm">
+      <form #jobForm="ngForm">
 
         <!-- Position Field -->
         <div class="form-group">
@@ -102,12 +109,29 @@
           />
         </div>
 
-        <!-- Status Field -->
-        <div>
-          <select>
-            <option ></option>
-          </select>
-        </div>
+       <!-- Status Field -->
+       <div class="form-group">
+        <label for="status">Status</label>
+        <select class="form-control" id="status" [(ngModel)]="editJob.status.id" name="status">
+          <option [ngValue]="1">Not applied yet</option>
+          <option [ngValue]="2">Applied</option>
+          <option [ngValue]="3">Interviewed</option>
+          <option [ngValue]="4">Offered</option>
+          <option [ngValue]="5">Rejected</option>
+        </select>
+      </div>
+
+      <!-- onsiteRemote Field -->
+      <div class="form-group">
+        <label for="status">Onsite/Remote</label>
+        <select class="form-control" id="onsiteRemote" [(ngModel)]="editJob.onsiteRemote.id" name="onsiteRemote">
+          <option [ngValue]="1">Onsite</option>
+          <option [ngValue]="2">Remote</option>
+          <option [ngValue]="3">Hybrid</option>
+        </select>
+      </div>
+
+
 
         <!-- Description Field -->
         <div class="form-group mt-2">
@@ -149,7 +173,7 @@
       <h5 class="mb-0">Create New Job Application</h5>
     </div>
     <div class="card-body">
-      <form (ngSubmit)="createJob()" #jobForm="ngForm">
+      <form #jobForm="ngForm">
 
         <!-- Position Field -->
         <div class="form-group">
@@ -189,6 +213,30 @@
           />
         </div>
 
+        <!-- Status Field -->
+       <div class="form-group">
+        <label for="status">Status</label>
+        <select class="form-control" id="status" [(ngModel)]="newJob.status.id" name="status">
+          <option [ngValue]="1">Not applied yet</option>
+          <option [ngValue]="2">Applied</option>
+          <option [ngValue]="3">Interviewed</option>
+          <option [ngValue]="4">Offered</option>
+          <option [ngValue]="5">Rejected</option>
+        </select>
+      </div>
+
+    <!-- onsiteRemote Field -->
+    <div class="form-group">
+      <label for="status">Onsite/Remote</label>
+      <select class="form-control" id="onsiteRemote" [(ngModel)]="newJob.onsiteRemote.id" name="onsiteRemote">
+        <option [ngValue]="1">Onsite</option>
+        <option [ngValue]="2">Remote</option>
+        <option [ngValue]="3">Hybrid</option>
+      </select>
+    </div>
+
+
+
         <!-- Description Field -->
         <div class="form-group mt-2">
           <label for="description">Description</label>
@@ -215,7 +263,7 @@
 
         <!-- Form Buttons -->
         <div class="d-flex justify-content-between align-items-center mt-4">
-          <button type="submit" class="btn btn-success" [disabled]="!jobForm.form.valid">Create Job</button>
+          <button type="submit" class="btn btn-success" [disabled]="!jobForm.form.valid" (click)="createJob()">Create Job</button>
 
         </div>
       </form>
