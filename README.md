@@ -25,6 +25,20 @@ TrackMyJob is a web application designed to help users track thier job applicati
 | `List<job>`    |`GET statuses/{statusId}/jobs`| Get all jobs of a specific status|
 | `List<job>`    |`GET onsiteremotes/{id}/jobs`| Get all jobs of a specific onsite/remote|
 
+## HTML/Angular Front End
+
+The front end of the Job Application Tracker is built using Angular. It provides a dynamic user interface for tracking job applications, managing job statuses, and viewing job details. The following features are included in the front end:
+
+### Key Features
+
+* Job Listing: Displays a list of all job applications, including position, company, status, and other relevant details.
+* Job CRUD Operations:
+*	Create new job entries using a form with fields such as Position, Company, Status, and Description.
+*	Edit existing jobs to update their details.
+*	Delete job entries.
+* Status Selection: Users can select the job status from predefined options such as "Not applied yet", "Applied", "Interviewed", "Offered", and "Rejected".
+* Onsite/Remote Option: Users can specify whether the job is Onsite, Remote, or Hybrid.
+
 ## HTML/JavaScript Front End using XHR/AJAX
 
 The front-end of TrackMyJob is built using HTML, CSS, and JavaScript, with AJAX (Asynchronous JavaScript and XML) requests handled via the XMLHttpRequest object (XHR). This enables seamless interaction between the client and server without reloading the page.
