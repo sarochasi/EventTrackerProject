@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit {
   newJob: Job = new Job();
   selected: Job | null = null;
   editJob: Job | null = null;
+  showCreateForm: boolean = false;
 
   constructor(
     private jobService: JobService
@@ -66,10 +67,15 @@ export class HomeComponent implements OnInit {
     console.log(this.selected);
   }
 
+  toggleCreateForm(): void {
+    this.showCreateForm = !this.showCreateForm;
+  }
+
   createJob(): void{
     this.jobService.create(this.newJob).subscribe({
       next: (result) => {
         this.reloadJobs();
+        this.toggleCreateForm();
         this.newJob = new Job();
 
       },
