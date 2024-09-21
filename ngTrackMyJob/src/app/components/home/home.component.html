@@ -24,8 +24,8 @@
             <td>{{ job.dateApplied }}</td>
             <td>{{ job.description }}</td>
             <td>
-              <button class="btn btn-sm btn-primary" (click)="updateJob(job)">Edit</button>
-              <!-- <button class="btn btn-sm btn-danger" (click)="deleteJob(job.id)">Delete</button> -->
+              <button class="btn btn-sm btn-primary" (click)="updateJob(job)">Details</button>
+              <button class="btn btn-sm btn-danger" (click)="deleteJob(job.id)">Delete</button>
             </td>
           </tr>
         </tbody>
@@ -44,6 +44,7 @@
     <p><strong>Company:</strong> {{ selected.company }}</p>
     <p><strong>Date Applied:</strong> {{ selected.dateApplied || 'N/A' }}</p>
     <p><strong>Last Updated:</strong> {{ selected.updateDate || 'N/A' }}</p>
+    <p><strong>Status:</strong> {{ selected.status || 'N/A' }}</p>
     <p><strong>Description:</strong> {{ selected.description }}</p>
     <p><strong>Note:</strong> {{ selected.note || 'N/A' }}</p>
 
@@ -54,8 +55,96 @@
   </div>
 </div>
 
+<!-- EditJob Form -->
+<div *ngIf="editJob">
+  <div class="card mt-4 shadow">
+    <div class="card-header">
+      <h5 class="mb-0">Edit Job Application</h5>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="createJob()" #jobForm="ngForm">
+
+        <!-- Position Field -->
+        <div class="form-group">
+          <label for="position">Position</label>
+          <input
+            type="text"
+            id="position"
+            class="form-control"
+            [(ngModel)]="editJob.position"
+            name="position"
+            required
+          />
+        </div>
+
+        <!-- Company Field -->
+        <div class="form-group mt-2">
+          <label for="company">Company</label>
+          <input
+            type="text"
+            id="company"
+            class="form-control"
+            [(ngModel)]="editJob.company"
+            name="company"
+            required
+          />
+        </div>
+
+        <!-- Date Applied Field -->
+        <div class="form-group mt-2">
+          <label for="dateApplied">Date Applied</label>
+          <input
+            type="date"
+            id="dateApplied"
+            class="form-control"
+            [(ngModel)]="editJob.dateApplied"
+            name="dateApplied"
+          />
+        </div>
+
+        <!-- Status Field -->
+        <div>
+          <select>
+            <option ></option>
+          </select>
+        </div>
+
+        <!-- Description Field -->
+        <div class="form-group mt-2">
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            class="form-control"
+            [(ngModel)]="editJob.description"
+            name="description"
+            rows="3"
+          ></textarea>
+        </div>
+
+        <!-- Note Field -->
+        <div class="form-group mt-2">
+          <label for="note">Note</label>
+          <textarea
+            id="note"
+            class="form-control"
+            [(ngModel)]="editJob.note"
+            name="note"
+            rows="2"
+          ></textarea>
+        </div>
+
+        <!-- Form Buttons -->
+        <div class="d-flex justify-content-between align-items-center mt-4">
+          <button type="submit" class="btn btn-success" (click)="updateJob(editJob)">Update Job</button>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
   <!-- New Job Form -->
-  <div class="card mt-4 shadow" >
+  <div class="card mt-4 shadow">
     <div class="card-header">
       <h5 class="mb-0">Create New Job Application</h5>
     </div>

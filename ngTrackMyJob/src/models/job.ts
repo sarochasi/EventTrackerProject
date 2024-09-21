@@ -7,6 +7,7 @@ export class Job{
   description: string;
   enabled: boolean;
   note:string;
+  status:string;
 
   constructor(
     id: number = 0,
@@ -14,9 +15,10 @@ export class Job{
     company: string = '',
     dateApplied: string = '',
     updateDate: string= '',
-  description: string ='',
-  enabled: boolean = true,
-  note:string =''
+    description: string ='',
+    enabled: boolean = true,
+    note:string ='',
+    status:string = ''
 
   ){
     this.id = id;
@@ -26,7 +28,8 @@ export class Job{
     this.updateDate = updateDate;
     this.description = description;
     this.enabled = enabled;
-    this.note = note
+    this.note = note;
+    this.status = status
   }
 
 }

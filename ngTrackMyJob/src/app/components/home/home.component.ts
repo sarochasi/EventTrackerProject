@@ -3,6 +3,7 @@ import { Job } from '../../../models/job';
 import { JobService } from './../../services/job.service';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { catchError, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -79,6 +80,20 @@ export class HomeComponent implements OnInit {
           }
       });
 
+  }
+
+  deleteJob(jobId: number){
+    this.jobService.destroy(jobId).subscribe(
+      {
+        next: () => {
+          this.reloadJobs();
+        },
+        error: (fail) =>{
+          console.log('JobListComponent.deteJob failed');
+          console.error(fail);
+        }
+      }
+    )
   }
 
 }

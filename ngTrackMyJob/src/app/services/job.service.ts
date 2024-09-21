@@ -48,5 +48,18 @@ export class JobService {
     );
   }
 
+  destroy(id: number){
+    return this.http.delete<void>(`${this.url}/${id}`).pipe(
+      catchError(
+        (err:any) => {
+          console.error('JobService.destroy(): errror deleteing job', err);
+          return throwError(
+            () => new Error('JobService.destroy(): error deleting job: ' + err)
+          );
+        }
+      )
+    );
+  }
+
 
 }
